@@ -1,5 +1,6 @@
 import sys,psutil,win32gui,win32api
 sys.path.append('./')
+sys.path.append('../../')
 from PyQt5.QtWidgets import *
 from QTBoard.ItemCalBoard import ItemCalBoard
 from QTBoard.LoginBoard import LoginBoard

@@ -19,7 +19,6 @@ class CommunicationProtocol:
 				1字节:数据段的类型(如整数 字符串 结构体 实数 二进制)
 				2-5字节:数据段的实际长度L
 				之后L个字节为实际数据内容
-
 	'''
 	def __init__(self,type_,data=None):
 		'''

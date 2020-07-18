@@ -20,7 +20,7 @@ class log:
                 self.data=''
 class HTTPStatus:
     def __init__(self,_type,content=None):
-        self.response_headers = "Server: CB HTTP Server\r\n"
+        self.response_headers = "Server: CB HTTP Server\r\ncontent-type: text/html; charset=UTF-8\r\n"
         if _type=='成功':#成功
             self.response_start_line = "HTTP/1.1 200 成功\r\n"
             self.response_body = '成功'
@@ -57,6 +57,7 @@ class HTTPStatus:
 class HTTPProcess:
     def __init__(self,data,db):
         self.db=db
+        self.parameter=None
         data=data.replace('\r','')
         data=data.split('\n')
         a1=data[0].index(' ')+1
@@ -64,24 +65,30 @@ class HTTPProcess:
         self.method=data[0][:a1-1]
         self.protocol=data[0][a2+1:]
         self.url=data[0][a1:a2]
-        a1=self.url.index('?')
-        self.interface=self.url[1:a1]
-        parameterStr=self.url[a1+1:]
-        self.parameter={}
-        i=0
-        while i<len(parameterStr):
-            a1=parameterStr.index('=',i)
-            key=parameterStr[i:a1]
-            i=a1+1
-            try:
-                a2=parameterStr.index('&',i)
-            except Exception as e:
-                value=parameterStr[i:]
-                a2=9999999
-            else:
-                value=parameterStr[i:a2]
-            i=a2+1
-            self.parameter[key]=value
+        try:
+            a1=self.url.index('?')
+            self.interface=self.url[1:a1]
+            parameterStr=self.url[a1+1:]
+            self.parameter={}
+            i=0
+            while i<len(parameterStr):
+                a1=parameterStr.index('=',i)
+                key=parameterStr[i:a1]
+                i=a1+1
+                try:
+                    a2=parameterStr.index('&',i)
+                except Exception as e:
+                    value=parameterStr[i:]
+                    a2=9999999
+                else:
+                    value=parameterStr[i:a2]
+                i=a2+1
+                self.parameter[key]=value
+        except Exception as e:
+            self.interface=self.url[1:]
+            print('无请求参数')
+
+        
         self.header={}
         data.remove(data[0])
         for i in data:
@@ -181,11 +188,12 @@ class HTTPProcess:
                 print('[3]数据合理性检查不通过,返回参数错误')
                 self.result=HTTPStatus('参数错误')
             return
+        self.result=HTTPStatus('请求不存在')
     def __str__(self):
         s='请求方法:'+self.method+'\n'
         s+='请求URL:'+self.url+'\n'
         s+='请求接口'+self.interface+'\n'
-        s+='请求参数'+str(self.parameter)+'\n'
+        s+='请求参数'+(str(self.parameter) if self.parameter else '无')+'\n'
         s+='请求协议版本:'+self.protocol+'\n'
         s+='请求头:\n'
         for i in self.header:
@@ -210,6 +218,9 @@ class HTTPServer:
     
     def clientProcess(self,client_sock):
         request_data = client_sock.recv(1024).decode('utf-8')
+        print('原始数据:')
+        print(request_data)
+        print('---------------------')
         print('数据接受完成,开始处理数据')
         process=HTTPProcess(request_data,self.db)
         process.process()

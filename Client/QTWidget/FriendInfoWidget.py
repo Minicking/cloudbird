@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from myLib.ImageProcess import ImageProcess
 class FriendInfoWidget(QWidget):
 	def __init__(self,parent=None,data=None):
 		super().__init__()
@@ -27,7 +28,10 @@ class FriendInfoWidget(QWidget):
 		self.parent.layoutAddWidget(layout_main,self.label_certicication,size=(35,15),alignment=Qt.AlignHCenter)
 		self.setLayout(layout_main)
 	def update(self):
-		self.label_photo.setPixmap(QPixmap.fromImage(QImage.fromData(self.data['photo'])))
+		Image=ImageProcess()
+		Image.readBytes(self.data['photo'])
+		Image.toCicle()
+		self.label_photo.setPixmap(QPixmap.fromImage(Image.toQImage()))
 		self.label_name.setText(self.data['name'])
 		if self.data['certification']==1:
 			self.label_certicication.setText('已认证')
