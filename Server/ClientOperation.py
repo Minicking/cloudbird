@@ -1,7 +1,7 @@
 '''
 所有有关于客户端以及用户的操作
 '''
-from cbProtocol import CommunicationProtocol
+from base.cbProtocol import CommunicationProtocol
 from Config import Config, PackTypeClient, PackTypeServer, messageManageType, StimulusType
 from Operation import operation
 

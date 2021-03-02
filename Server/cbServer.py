@@ -1,17 +1,17 @@
 import os, sys, time, socket, threading, struct, pickle
-from cbEmail import Email
-# sys.path.append('../../')
-# sys.path.append('../')
-from cbProtocol import CommunicationProtocol
-from myLib.mydb import mysqldb as mydb
+from base.cbEmail import Email
+from base.cbProtocol import CommunicationProtocol
+from base.HTTPServer import HTTPServer
+from base.Util import Uitl
+# from myLib.mydb import mysqldb as mydb
 from Config import Config, PackTypeClient, PackTypeServer, messageManageType, StimulusType
-from HTTPServer import HTTPServer
 from Operation import operation
 from ClientOperation import ClientOperation
 
 
-class Server:
-    def __init__(self):
+class Server(Uitl):
+    def __init__(self,config):
+        super.__init__(config)
         print("初始化:初始化服务器....")
         print("初始化:服务器端口设定...")
         self.Socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -103,5 +103,5 @@ class Server:
 
 
 if __name__ == '__main__':
-    s = Server()
+    s = Server(Config)
     s.run()

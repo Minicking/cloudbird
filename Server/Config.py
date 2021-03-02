@@ -4,6 +4,7 @@ class Config:
     email_host = 'smtp.qq.com'
     email_sender = '505826682@qq.com'
     email_password = 'fapgpyuhuagcbjbh'
+    log_path = 'log/debug'
 
 
 class StimulusType:

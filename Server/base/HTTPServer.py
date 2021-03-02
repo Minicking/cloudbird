@@ -1,6 +1,6 @@
 import socket, random, threading, hashlib, time, sys, os
-sys.path.append('../../')
-sys.path.append('../')
+# sys.path.append('../../')
+# sys.path.append('../')
 from multiprocessing import Process
 from cbEmail import Email
 from Config import Config
