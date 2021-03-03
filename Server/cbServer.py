@@ -3,7 +3,7 @@ from base.cbEmail import Email
 from base.cbProtocol import CommunicationProtocol
 from base.HTTPServer import HTTPServer
 from base.Util import Util
-from base.mydb import mysqldb as mydb
+from base.mydb import mysqldb
 from Config import Config, PackTypeClient, PackTypeServer, messageManageType, StimulusType
 from Operation import operation
 from ClientOperation import ClientOperation
@@ -28,7 +28,7 @@ class Server(Util):
         self.ClientListener = threading.Thread(target=self.Listener, args=())
         self.log("初始化:数据库开启...")
         try:
-            self.db = mydb(self.config.mysql_host, self.config.mysql_account, self.config.mysql_password,'cloudbird')  # pymysql.connect("localhost","root","123456","tTalk")
+            self.db = mysqldb(self.config.mysql_host, self.config.mysql_account, self.config.mysql_password,'cloudbird')  # pymysql.connect("localhost","root","123456","tTalk")
         except Exception as e:
             self.log('初始化失败:数据库连接失败', e)
             exit(0)
@@ -43,7 +43,7 @@ class Server(Util):
         self.email = Email(self.config)
         self.log("初始化:重置登录状态")
         self.resetLoginStat()
-        self.log('初始化完成,服务器运行中.服务器地址({}:{})'.format(socket.gethostbyname(socket.gethostname()), self.config.Port))
+        self.log('初始化完成,服务器运行中.服务器地址(http://{}:{})'.format(socket.gethostbyname(socket.gethostname()), self.config.Port))
 
     def end(self):
         pass

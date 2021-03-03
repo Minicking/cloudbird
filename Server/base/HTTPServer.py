@@ -3,8 +3,7 @@ from multiprocessing import Process
 
 from base import cbEmail
 from Config import Config
-from base.mydb import mysqldb as mydb
-
+from base.mydb import mysqldb
 
 class log:
     def __init__(self):
@@ -73,6 +72,7 @@ class HTTPProcess:
         self.method = data[0][:a1 - 1]
         self.protocol = data[0][a2 + 1:]
         self.url = data[0][a1:a2]
+        self.result = None
         try:
             a1 = self.url.index('?')
             self.interface = self.url[1:a1]
@@ -254,6 +254,7 @@ class HTTPProcess:
 class HTTPServer:
     def __init__(self):
         self.log = log()
+        self.db = None
 
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket.bind(('', 20203))
@@ -261,7 +262,7 @@ class HTTPServer:
         self.process.start()
 
     def start(self):
-        self.db = mydb('www.minicking.com', 'root', 'tzfminicking1997', 'cloudbird')
+        self.db = mysqldb('www.minicking.com', 'root', 'tzfminicking1997', 'cloudbird')
         self.server_socket.listen()
         while True:
             client_socket, client_address = self.server_socket.accept()

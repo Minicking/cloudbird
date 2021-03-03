@@ -164,7 +164,7 @@ if __name__ == '__main__':
             'fuck': 'me',
             'end': 123
         }))
-    L = t.getPack()
-    print('数据包头:', L[0])
-    print('数据包体:', L[1])
-    print(t.unpack(L[1]))
+    LL = t.getPack()
+    print('数据包头:', LL[0])
+    print('数据包体:', LL[1])
+    print(t.unpack(LL[1]))
