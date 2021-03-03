@@ -1,10 +1,22 @@
 class Config:
-    # PORT=8888
-    PORT = 20202
-    email_host = 'smtp.qq.com'
-    email_sender = '505826682@qq.com'
-    email_password = 'fapgpyuhuagcbjbh'
-    log_path = 'log/debug'
+    # # PORT=8888
+    # PORT = 20202
+    # email_host = 'smtp.qq.com'
+    # email_sender = '505826682@qq.com'
+    # email_password = 'fapgpyuhuagcbjbh'
+    # log_path = 'log/debug'
+
+    def __init__(self, env = 'dev'):
+        self.Port = 20202
+        self.email_host = 'smtp.qq.com'
+        self.email_sender = '505826682@qq.com'
+        self.email_password = 'fapgpyuhuagcbjbh'
+        self.log_path = 'log/debug'
+        self.mysql_host = 'www.minicking.com'
+        self.mysql_account = 'root'
+        self.mysql_password = 'tzfminicking1997'
+        if env == 'online':
+            pass
 
 
 class StimulusType:

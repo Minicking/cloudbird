@@ -46,24 +46,27 @@ class Const(dict):
         return key in self.values()
 
 
-class Uitl:
+class Util:
     def __init__(self, config):
         self.config = config
 
-    def log(self, text):
+    def log(self, *args):
         now = time.localtime()
-        now_time = r'{}:{}:{}'.format(now.tm_hour, now.tm_min, now.tm_sec)
+        now_time = r'{}:{}:{}'.format(now.tm_hour, '0{}'.format(now.tm_min) if now.tm_min < 10 else now.tm_min, '0{}'.format(now.tm_sec) if now.tm_sec < 10 else now.tm_sec)
         now_date = r'{}-{}-{}'.format(now.tm_year, now.tm_mon,now.tm_mday)
+        text = ''
+        for i in args:
+            text += ' {}'.format(i)
         if self.config.log_path:
-            path = r'../{}-{}.log'.format(self.config.log_path, now_date)
+            path = r'{}-{}.log'.format(self.config.log_path, now_date)
             with open(path, 'a+') as f:
-                f.write(r"[{}]:{}\n".format(now_time, text))
+                f.write("[{}]:{}\n".format(now_time, text))
         print(r"[{}]:{}".format(now_time, text))
 
-if __name__ == '__main__':
-    sys.path.append('../')
-    for i in sys.path:
-        print(i)
-    from Config import Config
-    a = Uitl(Config)
-    a.log('wocao')
+# if __name__ == '__main__':
+#     sys.path.append('../')
+#     for i in sys.path:
+#         print(i)
+#     from Config import Config
+#     a = Uitl(Config)
+#     a.log('wocao')

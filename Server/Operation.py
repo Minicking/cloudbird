@@ -5,7 +5,7 @@ import os, sys, time, socket, threading, struct, pickle
 # sys.path.append('../../')
 # sys.path.append('../')
 from Config import Config, PackTypeClient, PackTypeServer, messageManageType
-from cbProtocol import CommunicationProtocol
+from base.cbProtocol import CommunicationProtocol
 
 class operation:
     @staticmethod

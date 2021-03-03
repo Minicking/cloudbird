@@ -1,10 +1,9 @@
 import socket, random, threading, hashlib, time, sys, os
-# sys.path.append('../../')
-# sys.path.append('../')
 from multiprocessing import Process
-from cbEmail import Email
+
+from base import cbEmail
 from Config import Config
-from myLib.mydb import mysqldb as mydb
+from base.mydb import mysqldb as mydb
 
 
 class log:
@@ -108,7 +107,7 @@ class HTTPProcess:
                 self.header[key] = value
 
     def sendConfirmCodeEmail(self, email, confirmcode):
-        e = Email(Config)
+        e = cbEmail.Email(Config)
         print('Emai组件数据:')
         print(str(e))
         print(email, confirmcode)
@@ -262,7 +261,7 @@ class HTTPServer:
         self.process.start()
 
     def start(self):
-        self.db = mydb('127.0.0.1', 'root', '123456', 'cb')
+        self.db = mydb('www.minicking.com', 'root', 'tzfminicking1997', 'cloudbird')
         self.server_socket.listen()
         while True:
             client_socket, client_address = self.server_socket.accept()

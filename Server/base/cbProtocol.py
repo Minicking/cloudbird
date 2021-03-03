@@ -32,7 +32,7 @@ class CommunicationProtocol:
         self.type = type_
         self.data = None
         if data:
-            if isinstance(data) == tuple:
+            if isinstance(data, tuple):
                 self.data = data
             else:
                 self.data = (data, )
