@@ -3,6 +3,7 @@
 '''
 import time
 
+
 # AC自动机算法
 class node:
     def __init__(self):
@@ -10,10 +11,13 @@ class node:
         self.fail = None
         self.isWord = False
         self.word = ""
+
+
 class JunkFilter:
-    def __init__(self,path):
+    def __init__(self, path):
         self.root = node()
         self.parse(path)
+
     # 添加敏感词函数
     def addword(self, word):
         temp_root = self.root
@@ -23,6 +27,7 @@ class JunkFilter:
             temp_root = temp_root.next[char]
         temp_root.isWord = True
         temp_root.word = word
+
     # 失败指针函数
     def make_fail(self):
         temp_que = []
@@ -30,7 +35,7 @@ class JunkFilter:
         while len(temp_que) != 0:
             temp = temp_que.pop(0)
             p = None
-            for key,value in temp.next.item():
+            for key, value in temp.next.item():
                 if temp == self.root:
                     temp.next[key].fail = self.root
                 else:
@@ -43,6 +48,7 @@ class JunkFilter:
                     if p is None:
                         temp.next[key].fail = self.root
                 temp_que.append(temp.next[key])
+
     # 查找敏感词函数
     def search(self, content):
         p = self.root
@@ -63,11 +69,13 @@ class JunkFilter:
                 p = self.root
             currentposition += 1
         return result
+
     # 加载敏感词库函数
     def parse(self, path):
-        with open(path,encoding='utf-8') as f:
+        with open(path, encoding='utf-8') as f:
             for keyword in f:
                 self.addword(str(keyword).strip())
+
     # 敏感词替换函数
     def words_replace(self, text):
         """
@@ -80,11 +88,13 @@ class JunkFilter:
             m = text.replace(x, '*' * len(x))
             text = m
         return text
+
+
 if __name__ == '__main__':
-    time1=time.time()
+    time1 = time.time()
     ah = JunkFilter('敏感词库/')
-    text1="你这个臭傻逼"
-    text2=ah.words_replace(text1)
+    text1 = "你这个臭傻逼"
+    text2 = ah.words_replace(text1)
     print(text1)
     print(text2)
     time2 = time.time()
